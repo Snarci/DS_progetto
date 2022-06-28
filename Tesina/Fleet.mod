@@ -15,14 +15,21 @@ float val_nutr_unitari[valori_nutrizionali][alimenti] = ...;
 {string} C    = ...;
 {string} F    = ...;
 int      S[C] = ...;
-range N=1..2;
+
 tuple l {
 		  string  	o;
 		  string	d;
 		  int       t;
-	}
-l      L[i in N]    = ...;
+	};
 
+{l} L    = ...;
+/*
+tuple cost {
+		  key l flight;
+		  int price;
+	};
+*/	
+int c[L][F]    = ...;
 
 dvar float+ x[alimenti];
 constraint Vincolo1[valori_nutrizionali];
