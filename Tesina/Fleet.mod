@@ -3,15 +3,14 @@
  * Author: lucaz
  * Creation Date: 27 giu 2022 at 16:33:53
  *********************************************/
-
-	
+/*
 {string} alimenti = ...;
 {string} valori_nutrizionali = ...;
 float costo[alimenti] = ...;
 float quant_max[alimenti] = ...;
 float val_nutr_min[valori_nutrizionali] = ...;
 float val_nutr_unitari[valori_nutrizionali][alimenti] = ...;
-
+*/
 {string} C    = ...;
 {string} F    = ...;
 int      S[C] = ...;
@@ -23,21 +22,39 @@ tuple l {
 	};
 
 {l} L    = ...;
-/*
-tuple cost {
-		  key l flight;
-		  int price;
-	};
-*/	
-int c[L][F]    = ...;
 
+int c[F][L]    = ...;
+
+int t[F][C][C]    = ...;
+
+range time = 1..10;
+
+// per fare un filtraggio
+{l} myPs={k | k in L : k.t < 2};
+//parte dvar
+
+dvar boolean x[F][L];
+dvar int y[F][time][time];
+dvar int z[F][C][time];
+
+//parte costraints
+
+//successiva
+	minimize
+		sum (f in F)
+		  sum(l in L)
+			c[f][l]*x[f][l];
+	subject to{
+	  forall (l in L)
+	  			sum (f in F)
+	  	  		x[f][l]==1;
+	  }
+/*
 dvar float+ x[alimenti];
 constraint Vincolo1[valori_nutrizionali];
 //constraint Vincolo2[alimenti];
 
-	minimize
-		sum (j in alimenti)
-			costo[j] * x[j];
+
 	subject to
 	{
 		forall (i in valori_nutrizionali)
@@ -48,13 +65,18 @@ constraint Vincolo1[valori_nutrizionali];
 			Vincolo2:	  
 				x[j] <= quant_max[j];
 	}
- 
+ */
  execute PARAMS {
   cplex.tilim = 3600.000;
 }
 
 execute DISPLAY
 {
+    writeln("\n",time);
+    writeln("\n",x);
+    writeln("\n",y);
+    writeln("\n",z);
+    /*
   	writeln ("\r\n\r\n Valore funzione obiettivo: ", cplex.getObjValue());
 	writeln("\n\n Variabili decisionali: \n");
 	var a, b, c;
@@ -81,5 +103,6 @@ execute DISPLAY
     writeln("\n\n Variabili duali del secondo gruppo di vincoli: \n");
     for(c in Vincolo2)
     writeln("Variabile duale del vincolo1[",c,"] = ", Vincolo2[c].dual);
+    */
 }
  
