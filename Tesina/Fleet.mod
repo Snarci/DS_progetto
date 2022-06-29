@@ -13,7 +13,7 @@ float val_nutr_unitari[valori_nutrizionali][alimenti] = ...;
 */
 {string} C    = ...;
 {string} F    = ...;
-int      S[C] = ...;
+int      S[F] = ...;
 
 tuple l {
 		  string  	o;
@@ -27,7 +27,7 @@ int c[F][L]    = ...;
 
 int t[F][C][C]    = ...;
 
-range time = 0..10;
+range time = 1..10;
 
 // per fare un filtraggio
 {l} myPs={k | k in L : k.t < 2};
@@ -51,10 +51,28 @@ dvar int z[F][C][time];
 	  	  		x[f][l]==1;
 	  //secondo vincolo	  		
 	  forall (f in F, o in C,t_iter in time){
-	  			z[f][o][t_iter]-y[f][o][{(t_iter-1)%10}] - 
-	  			sum (d in C,k in L : k.d == d) (x[f][k]-y[f][o][t_iter]) ==0;
-           }	  	  			  		
-	  }
+	  			(z[f][o][t_iter]+y[f][o][(t_iter-1 == 0)?1 : t_iter-1] - 
+	  			sum (d in C,k in L : k.d == d) (x[f][k])-y[f][o][t_iter]) ==0;
+           }	
+           
+  	  forall (f in F)
+  	    (
+  			sum (l in L : (( l.t + t[f][l.o][l.d]) >= (l.t+1)))
+  			
+  			//sum (l in L : l.t == 1)
+  	  			x[f][l] +
+  	  		sum(o in C)
+  	  		    y[f][o][1])
+  	  		<=S[f];
+	  	forall (f in F, o in C,t_iter in time){
+        	y[f][o][t_iter] >= 0;
+        } 	  		
+	  		
+      }	 
+	       	  			  		
+	  
+ 
+
 /*
 dvar float+ x[alimenti];
 constraint Vincolo1[valori_nutrizionali];
