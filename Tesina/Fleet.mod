@@ -27,14 +27,14 @@ int c[F][L]    = ...;
 
 int t[F][C][C]    = ...;
 
-range time = 1..10;
+range time = 0..10;
 
 // per fare un filtraggio
 {l} myPs={k | k in L : k.t < 2};
 //parte dvar
 
 dvar boolean x[F][L];
-dvar int y[F][time][time];
+dvar int y[F][C][time];
 dvar int z[F][C][time];
 
 //parte costraints
@@ -45,9 +45,15 @@ dvar int z[F][C][time];
 		  sum(l in L)
 			c[f][l]*x[f][l];
 	subject to{
+	  //primo vincolo
 	  forall (l in L)
 	  			sum (f in F)
 	  	  		x[f][l]==1;
+	  //secondo vincolo	  		
+	  forall (f in F, o in C,t_iter in time){
+	  			z[f][o][t_iter]-y[f][o][{(t_iter-1)%10}] - 
+	  			sum (d in C,k in L : k.d == d) (x[f][k]-y[f][o][t_iter]) ==0;
+           }	  	  			  		
 	  }
 /*
 dvar float+ x[alimenti];
