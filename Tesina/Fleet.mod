@@ -28,10 +28,10 @@ int c[F][L]    = ...;
 int t[F][C][C]    = ...;
 
 range time = 1..10;
-int t0=1;
+int t0=2;
 // per fare un filtraggio
 {l} myPs={k | k in L : k.t < 2};
-{l} test={k |k in L: k.t+t["Alitalia"][k.o][k.d]>= k.t+1 && k.t==first(L).t};
+{l} test={k |k in L: (k.t+t["Alitalia"][k.o][k.d]) > t0 && t0 > k.t};
 
 //parte dvar
 
@@ -64,53 +64,44 @@ constraint Vincolo1[L];
 			c[f][l]*x[f][l];
 	subject to{
 	  //primo vincolo
-	  
+	        forall(f in F, t_iter in time, o in C){
+        sum(k in L : (k.t+t[f][k.o][k.d])==t_iter)
+          (x[f][k])==z[f][o][t_iter];
+        }
 	   
 	  forall (l in L)
 	    Vincolo1[l]:
 	  			sum (f in F)
 	  	  		x[f][l]==1;
 	  //secondo vincolo	  		
-	  forall (f in F, o in C,t_iter in time,k in L   ){
-	     Vincolo2:
-	     
-	  			(z[f][o][t_iter]    +   y[f][o][((t_iter-1) == 0)?1 : (t_iter-1)] - 
-	  			sum (d in C : k.d==d) (
-	  				
-	  					(x[f][k]))
-	  					-y[f][o][t_iter])== 0;
-           }
+
      //terzo vincolo
 
      forall(f in F)
        Vincolo3:
-       (
-       sum(k in L: (k.t+t[f][k.o][k.d]) >= t0 && t0 >= k.t)
-         (x[f][k])+
-       sum(o in C)
-         y[f][o][t0]
-       )<=S[f];        
-      forall (f in F, o in C,t_iter in time   ){
-	     Vincolo4:
-	      y[f][o][t_iter]>=0;
-       }
-       forall (f in F){
-	     Vincolo6:
-	      z[f]["Cagliari"][1]==S[f];
-       }      
+       
+	       sum(k in L: (k.t+t[f][k.o][k.d]) >= t0 && t0 >= k.t)
+	         	(x[f][k])+
+	       sum(o in C)
+	         	y[f][o][t0]
+       <=S[f];        
+           
          
-           /*	
+         	
       forall (f in F, o in C,t_iter in time   ){
-	     Vincolo3:
 	      y[f][o][t_iter]>=0;
        }         
  
- 	 
-      
-      forall(f in F, t_iter in time, o in C){
-        sum(k in L : (k.t+t[f][k.o][k.d])==t_iter)
-          (x[f][k])==z[f][o][t_iter];
-        }
+ 	  forall (f in F,k in L){
+ 		Vincolo2:
+		(z[f][k.o][k.t]    +   y[f][k.o][((k.t-1) == 0)?1 : (k.t-1)] - 
+		sum (d in C : k.d==d) (
+			
+				(x[f][k]))-
+				y[f][k.o][k.t])== 0;
+           }
+        /*
+
         */ 
     }      	 
 	       	  			  		
