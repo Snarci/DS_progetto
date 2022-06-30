@@ -28,17 +28,35 @@ int c[F][L]    = ...;
 int t[F][C][C]    = ...;
 
 range time = 1..10;
-
+int t0=1;
 // per fare un filtraggio
 {l} myPs={k | k in L : k.t < 2};
+{l} test={k |k in L: k.t+t["Alitalia"][k.o][k.d]>= k.t+1 && k.t==first(L).t};
+
 //parte dvar
 
 dvar boolean x[F][L];
-dvar int y[F][C][time];
+dvar int y[F][C][time] ;
 dvar int z[F][C][time];
+/*
+execute{
+  var f,o,t_iter;
+  for (f in F){for (o in C){ for (t_iter in time){
+     ma=z[f][o][t_iter]+y[f][o][((t_iter-1) == 0)?1 : (t_iter-1)];
+     writeln("\n",ma);
+    }}}
+  }  
 
+execute{
+  var f,o,t_iter;
+   for (f in F, o in C,t_iter in time   ){
+	  			((z[f][o][t_iter]+y[f][o][((t_iter-1) == 0)?1 : (t_iter-1)] - 
+	  			sum (d in C,k in L : k.d == d) 
+	  			(x[f][k]))-y[f][o][t_iter])== 0;
+           }	
+  }*/
 //parte costraints
-
+constraint Vincolo1[L];
 //successiva
 	minimize
 		sum (f in F)
@@ -46,29 +64,55 @@ dvar int z[F][C][time];
 			c[f][l]*x[f][l];
 	subject to{
 	  //primo vincolo
+	  
+	   
 	  forall (l in L)
+	    Vincolo1[l]:
 	  			sum (f in F)
 	  	  		x[f][l]==1;
 	  //secondo vincolo	  		
-	  forall (f in F, o in C,t_iter in time){
-	  			(z[f][o][t_iter]+y[f][o][(t_iter-1 == 0)?1 : t_iter-1] - 
-	  			sum (d in C,k in L : k.d == d) (x[f][k])-y[f][o][t_iter]) ==0;
-           }	
-           
-  	  forall (f in F)
-  	    (
-  			sum (l in L : (( l.t + t[f][l.o][l.d]) >= (l.t+1)))
-  			
-  			//sum (l in L : l.t == 1)
-  	  			x[f][l] +
-  	  		sum(o in C)
-  	  		    y[f][o][1])
-  	  		<=S[f];
-	  	forall (f in F, o in C,t_iter in time){
-        	y[f][o][t_iter] >= 0;
-        } 	  		
-	  		
-      }	 
+	  forall (f in F, o in C,t_iter in time,k in L   ){
+	     Vincolo2:
+	     
+	  			(z[f][o][t_iter]    +   y[f][o][((t_iter-1) == 0)?1 : (t_iter-1)] - 
+	  			sum (d in C : k.d==d) (
+	  				
+	  					(x[f][k]))
+	  					-y[f][o][t_iter])== 0;
+           }
+     //terzo vincolo
+
+     forall(f in F)
+       Vincolo3:
+       (
+       sum(k in L: (k.t+t[f][k.o][k.d]) >= t0 && t0 >= k.t)
+         (x[f][k])+
+       sum(o in C)
+         y[f][o][t0]
+       )<=S[f];        
+      forall (f in F, o in C,t_iter in time   ){
+	     Vincolo4:
+	      y[f][o][t_iter]>=0;
+       }
+       forall (f in F){
+	     Vincolo6:
+	      z[f]["Cagliari"][1]==S[f];
+       }      
+         
+           /*	
+      forall (f in F, o in C,t_iter in time   ){
+	     Vincolo3:
+	      y[f][o][t_iter]>=0;
+       }         
+ 
+ 	 
+      
+      forall(f in F, t_iter in time, o in C){
+        sum(k in L : (k.t+t[f][k.o][k.d])==t_iter)
+          (x[f][k])==z[f][o][t_iter];
+        }
+        */ 
+    }      	 
 	       	  			  		
 	  
  
@@ -96,14 +140,14 @@ constraint Vincolo1[valori_nutrizionali];
 
 execute DISPLAY
 {
-    writeln("\n",time);
-    writeln("\n",x);
-    writeln("\n",y);
-    writeln("\n",z);
+    //writeln("\n",time);
+    //writeln("\n",x);
+    //writeln("\n",y);
+    writeln("\n",test);
     /*
   	writeln ("\r\n\r\n Valore funzione obiettivo: ", cplex.getObjValue());
 	writeln("\n\n Variabili decisionali: \n");
-	var a, b, c;
+	
 	for(a in alimenti)
 	if(x[a] != 0)
 	writeln("\t x[", a,"]: ", x[a]);
@@ -112,10 +156,19 @@ execute DISPLAY
     for(a in alimenti)
     writeln("Costo ridotto di x[",a,"] = ", x[a].reducedCost);
 	
+	var a, b, c;
     writeln("\n\n Scarti del primo gruppo di vincoli: \n");
     for(b in Vincolo1)
     writeln("Scarto del vincolo [",b,"] = ", Vincolo1[b].slack);
     
+    writeln("\n\n Scarti del secondo gruppo di vincoli: \n");
+    for(a in Vincolo2)
+    writeln("Scarto del vincolo [",a,"] = ", Vincolo2[a]);
+    
+    writeln("\n\n Scarti del secondo gruppo di vincoli: \n");
+    for(c in Vincolo3)
+    writeln("Scarto del vincolo [",c,"] = ", Vincolo3[c].slack);
+    /*
     writeln("\n\n Scarti del secondo gruppo di vincoli: \n");
     for(b in Vincolo2)
     writeln("Scarto del vincolo [",b,"] = ", Vincolo2[b].slack);

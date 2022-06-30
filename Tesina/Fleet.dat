@@ -15,11 +15,11 @@
 
 	C = {"Cagliari", "Milano"};
 	F = {"Alitalia","Volotea"};
-	S = [5,3];
+	S = [1,1];
 	
-	L = {<"Cagliari","Milano",1>,<"Milano","Cagliari",2>};
+	L = {<"Cagliari","Milano",1>,<"Milano","Cagliari",1>,<"Milano","Cagliari",2>,<"Cagliari","Milano",4>,<"Milano","Cagliari",5>};
 	
-	c = [[1,2],[3,4]];
+	c = [[1,2,1,1,1],[1,4,1,1,1]];
 	
 	t = [[[1,2],[3,4]],[[1,2],[3,4]]];
 	
