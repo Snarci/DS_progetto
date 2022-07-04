@@ -1,0 +1,22 @@
+/*********************************************
+ * OPL 22.1.0.0 Data
+ * Author: lucaz
+ * Creation Date: 4 lug 2022 at 15:23:41
+ *********************************************/
+
+F = {"Alitalia","Volotea"};
+
+S = [1,1];
+
+C = {"Milano","Torino"};
+
+L = {<"Milano","Torino",4>} ;
+
+c = [[1],[2]];
+
+t_list = {
+<"Alitalia","Milano","Torino">,<"Volotea","Milano","Torino">,
+<"Alitalia","Torino","Milano">,<"Volotea","Torino","Milano">,			
+};
+
+t=[2,2,2,2];

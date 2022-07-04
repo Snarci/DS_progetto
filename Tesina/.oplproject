@@ -4,12 +4,22 @@
     	
     <configs>
         		
-        <config default="true" name="Fleet" category="opl">
+        <config default="false" name="Fleet" category="opl">
             			
             <ref name="Fleet.dat" type="data">
 			</ref>
             			
             <ref name="Fleet.mod" type="model">
+			</ref>
+            		
+        </config>
+        		
+        <config default="true" name="Fleet2" category="opl">
+            			
+            <ref name="Fleet_new.dat" type="data">
+			</ref>
+            			
+            <ref name="Fleet_new.mod" type="model">
 			</ref>
             		
         </config>

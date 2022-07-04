@@ -28,79 +28,64 @@ int c[F][L]    = ...;
 int t[F][C][C]    = ...;
 
 range time = 1..10;
-int t0=2;
+int t0=3;
 // per fare un filtraggio
-{l} myPs={k | k in L : k.t < 2};
-{l} test={k |k in L: (k.t+t["Alitalia"][k.o][k.d]) > t0 && t0 > k.t};
+//{l} myPs={k | k in L : k.t < 2};
+{l} test={k |k in L: (k.t<t0 && k.t+t["Alitalia"][k.o][k.d]>t0)};
 
 //parte dvar
 
-dvar boolean x[F][L];
+dvar boolean x[F][C][C][time];
 dvar int y[F][C][time] ;
 dvar int z[F][C][time];
-/*
-execute{
-  var f,o,t_iter;
-  for (f in F){for (o in C){ for (t_iter in time){
-     ma=z[f][o][t_iter]+y[f][o][((t_iter-1) == 0)?1 : (t_iter-1)];
-     writeln("\n",ma);
-    }}}
-  }  
 
-execute{
-  var f,o,t_iter;
-   for (f in F, o in C,t_iter in time   ){
-	  			((z[f][o][t_iter]+y[f][o][((t_iter-1) == 0)?1 : (t_iter-1)] - 
-	  			sum (d in C,k in L : k.d == d) 
-	  			(x[f][k]))-y[f][o][t_iter])== 0;
-           }	
-  }*/
 //parte costraints
-constraint Vincolo1[L];
+
 //successiva
 	minimize
 		sum (f in F)
-		  sum(l in L)
-			c[f][l]*x[f][l];
+		  sum(k in L)
+			c[f][k]*x[f][k.o][k.d][k.t];
 	subject to{
-	  //primo vincolo
-	        forall(f in F, t_iter in time, o in C){
-        sum(k in L : (k.t+t[f][k.o][k.d])==t_iter)
-          (x[f][k])==z[f][o][t_iter];
+	  
+	  //init
+		
+  	  //primo vincolo
+  	  forall (k in L)
+      	Vincolo1:(
+  			sum (f in F)
+  	  			x[f][k.o][k.d][k.t])==1;
+  	  
+	  //secondo vincolo	 x+yi 		
+      forall (f in F, o in C, t_i in time )
+        Vincolo2:(
+        	z[f][o][t_i]	+	y[f][o][((t_i-1) <= 0)?1 : (t_i-1)] - 
+        		sum(d in C)(
+        			x[f][o][d][t_i])
+        			-
+        			y[f][o][t_i]
+        			)==0;
+      //terzo vincolo
+      //da fare quando ci sono i voli strani
+      //quarto vincolo
+      forall(f in F)
+        Vincolo4:
+        (
+        	sum(k in L: (k.t<=t0 && k.t+t[f][k.o][k.d]>=t0))(
+        	  ((x[f][k.o][k.d][k.t])) + 
+        	sum(o in C)
+        	  (y[f][o][t0])) 
+    	)<=S[f];
+ 		
+ 	   //
+ 	   forall(f in F, o in C, t_i in time)
+ 	     y[f][o][t_i]>=0   ;	
+//condizione 
+	      /*forall(f in F,o in C, t_i in time){
+		  sum(k in L : k.t+t[f][k.o][k.d]==t_i && k.o==o)
+  				(x[f][k.d][k.o][k.t])==z[f][o][t_i];
         }
-	   
-	  forall (l in L)
-	    Vincolo1[l]:
-	  			sum (f in F)
-	  	  		x[f][l]==1;
-	  //secondo vincolo	  		
-
-     //terzo vincolo
-
-     forall(f in F)
-       Vincolo3:
        
-	       sum(k in L: (k.t+t[f][k.o][k.d]) >= t0 && t0 >= k.t)
-	         	(x[f][k])+
-	       sum(o in C)
-	         	y[f][o][t0]
-       <=S[f];        
-           
-         
-         	
-      forall (f in F, o in C,t_iter in time   ){
-	      y[f][o][t_iter]>=0;
-       }         
- 
- 	  forall (f in F,k in L){
- 		Vincolo2:
-		(z[f][k.o][k.t]    +   y[f][k.o][((k.t-1) == 0)?1 : (k.t-1)] - 
-		sum (d in C : k.d==d) (
-			
-				(x[f][k]))-
-				y[f][k.o][k.t])== 0;
-           }
-        /*
 
         */ 
     }      	 
