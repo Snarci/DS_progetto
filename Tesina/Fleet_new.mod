@@ -17,7 +17,7 @@
  
  int c[F][L] = ...;
  
- range time = 0..10;
+ range time = 0..15;
  
  tuple t_struct{
    string f;
@@ -52,7 +52,7 @@ subject to{
   	forall(f in F,o in C,t_i in time : t_i >=1)
   	  (
   	  z[f][o][t_i]+y[f][o][(t_i-1)]-
-  	  sum(d in C)(
+  	  sum(d in C : d!=o )(
   	  	x[f][o][d][t_i])-y[f][o][t_i]
   	   
   	  )==0;
@@ -75,14 +75,14 @@ subject to{
 	
 	
 	forall(f in F, t_i in time, d in C)(
-		z[f][d][t_i]==
+		
 		sum(<o1,d1,t_part> in L: (t_part+t[<f,o1,d1>])==t_i && d == d1)(
 			x[f][o1][d1][t_part]
-		)
+		)==z[f][d][t_i]
 	);
-	
-	forall(f in F,o in C,d in C,t_i in time)(
-		sum(k in L:k.o!=o || k.d!=d || k.t!=t_i)(x[f][o][d][t_i])==0
+
+	forall(f in F,o in C,d in C,t_i in time,k in L: k.d!=d && k.o != o && k.t!=t_i )(
+		  (x[f][o][d][t_i])==0
 	);
-	
+		/**/
   }

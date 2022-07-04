@@ -6,11 +6,11 @@
 
 F = {"Alitalia","Volotea"};
 
-S = [1,1];
+S = [3,2];
 
 C = {"Milano","Torino"};
 
-L = {<"Milano","Torino",4>} ;
+L = {<"Milano","Torino",4>,<"Milano","Torino",5>,<"Milano","Torino",6>,<"Milano","Torino",7>} ;
 
 c = [[1],[2]];
 
