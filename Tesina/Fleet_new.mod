@@ -77,8 +77,22 @@ subject to{
 			x[f][o1][d1][t_part]
 		)==z[f][d][t_i]
 	);
+	
 	//non scambi a caso quando arivano gli aerei
-	forall(f in F,o in C,d in C,t_i in time,k in L: k.d!=d && k.o != o && k.t!=t_i )(
+	forall(f in F,o in C,d in C,t_i in time : <o,d,t_i> not in L)
+	    (
 		  (x[f][o][d][t_i])==0
-	);
+		);
+	/**/
   }
+int xf[L][F];  
+  execute DISPLAY
+{
+  var f,k;
+   for(f in F){
+     for(k in L){
+       xf[k][f]=x[f][k.o][k.d][k.t];
+       }
+     }
+}
+  
