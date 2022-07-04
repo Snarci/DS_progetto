@@ -85,9 +85,11 @@ subject to{
 		);
 	/**/
   }
+//sono le x formattate bene e capibili  
 int xf[L][F];  
   execute DISPLAY
 {
+  // in pratica salvo tutto x in maniera bellina dentro xf
   var f,k;
    for(f in F){
      for(k in L){
