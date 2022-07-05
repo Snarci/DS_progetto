@@ -59,7 +59,8 @@ subject to{
   	  (
   	  z[f][o][t_i]+y[f][o][(t_i-1)]-
   	  sum(d in C : d!=o )(
-  	  	x[f][o][d][t_i])-y[f][o][t_i]
+  	  	x[f][o][d][t_i])-
+  	  	y[f][o][t_i]
   	  	
   	  )==0;
   	//non negatività della y e z  
@@ -93,7 +94,7 @@ subject to{
 	//vincolo per H coppie di voli stessa compagnia
 	forall(f in F,<f1,f2> in H)(
 		
-			(x[f][f1.o][f1.d][f1.t]-x[f][f2.o][f2.d][f2.t]
+			(x[f][f1.o][f1.d][f1.t]-x[f][f1.d][f2.d][f2.t]
 			)==0
 	);
 	/**/

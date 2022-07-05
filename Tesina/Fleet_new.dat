@@ -6,7 +6,7 @@
 
 F = {"A319","A320","A321","E175","E190","B737"};
 
-S = [2,2,2,2,2,2];
+S = [12,12,12,12,12,12];
 
 C = {"Milano","Torino","Cagliari","Venezia","Pisa","Roma","Napoli"};
 /*
@@ -30,5 +30,4 @@ t from SheetRead(s,"E107:E256");
 H = {
 <<"Milano","Torino",5>,<"Torino","Milano",7>>,
 <<"Torino","Milano",5>,<"Milano","Torino",7>>,
-<<"Milano","Torino",4>,<"Torino","Milano",4>>,
 };
