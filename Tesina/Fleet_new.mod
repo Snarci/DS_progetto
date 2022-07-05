@@ -28,7 +28,11 @@
 {t_struct} t_list = ... ;
  
 int t[t_list] = ...;
-
+tuple h{
+  l f1;
+  l f2;
+  }
+{h} H = ...;  
 int t0 = 0;
 //variabili decisionali
 //chi fa il volo cct
@@ -83,6 +87,13 @@ subject to{
 	    (
 		  (x[f][o][d][t_i])==0
 		);
+		
+	//vincolo per H coppie di voli stessa compagnia
+	forall(f in F,<f1,f2> in H)(
+		
+			(x[f][f1.o][f1.d][f1.t]-x[f][f2.o][f2.d][f2.t]
+			)==0
+	);
 	/**/
   }
 //sono le x formattate bene e capibili  

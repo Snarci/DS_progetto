@@ -6,19 +6,21 @@
 
 F = {"Alitalia","Volotea"};
 
-S = [3,1];
+S = [2,2];
 
 C = {"Milano","Torino"};
 /*
 L = {
 <"Milano","Torino",4>,<"Milano","Torino",5>,<"Milano","Torino",6>,<"Milano","Torino",7>,
-} ;*/
+} ;
 L = {
 <"Milano","Torino",4>,<"Milano","Torino",5>,<"Milano","Torino",6>,
 <"Milano","Torino",7>,<"Milano","Torino",12>,<"Milano","Torino",13>,
 <"Torino","Milano",4>,<"Torino","Milano",5>,<"Torino","Milano",6>,
 <"Torino","Milano",7>,<"Torino","Milano",12>,<"Torino","Milano",13>
-} ;
+} ;*/
+SheetConnection s("Flights.xlsx");
+L from SheetRead(s,"A2:C23");
 c = [[1],[2]];
 
 t_list = {
@@ -27,3 +29,9 @@ t_list = {
 };
 
 t=[2,2,2,2];
+//pair of flights
+H = {
+<<"Milano","Torino",5>,<"Torino","Milano",7>>,
+<<"Torino","Milano",5>,<"Milano","Torino",7>>,
+<<"Milano","Torino",4>,<"Torino","Milano",4>>,
+};
