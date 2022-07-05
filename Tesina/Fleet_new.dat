@@ -6,7 +6,7 @@
 
 F = {"A319","A320","A321","E175","E190","B737"};
 
-S = [12,12,12,12,12,12];
+S = [4,5,7,5,8,5];
 
 C = {"Milano","Torino","Cagliari","Venezia","Pisa","Roma","Napoli"};
 /*
@@ -23,7 +23,7 @@ SheetConnection s("Flights.xlsx");
 L from SheetRead(s,"A2:C101");
 t_list from SheetRead(s,"B107:D256");
 
-c = [[1],[2]];
+c from SheetRead(s,"AC2:DX7");
 
 t from SheetRead(s,"E107:E256");
 //pair of flights

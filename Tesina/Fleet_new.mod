@@ -8,41 +8,40 @@
  {string} C = ...; 
  
  tuple l {
-   string o;
-   string d;
-   int t;
-   };
- 
+   	string o;
+   	string d;
+   	int t;
+   	};
  {l} L = ...;
- 
- 
  
  range time = 0..30;
  
  tuple t_struct{
-   string f;
-   string o;
-   string d;
-   }
-    
-{t_struct} t_list = ... ;
+   	string f;
+   	string o;
+   	string d;
+   	} 
+ {t_struct} t_list = ... ;
  
-int t[t_list] = ...;
+ int t[t_list] = ...;
 
-int c[F][L] = ...;
-tuple h{
-  l f1;
-  l f2;
-  }
-{h} H = ...;  
-int t0 = 0;
+ int c[F][L] = ...;
+
+ tuple h{
+  	l f1;
+  	l f2;
+  	}
+ {h} H = ...;  
+
+ int t0 = 0;
+
 //variabili decisionali
 //chi fa il volo cct
 dvar boolean x[F][C][C][time];
 //quanti aerei aspettano a terra
-dvar int y[F][C][time];
+dvar int+ y[F][C][time];
 //quanti arrivano in c in tempo t
-dvar int z[F][C][time];
+dvar int+ z[F][C][time];
 
 minimize		
 	sum (f in F)
