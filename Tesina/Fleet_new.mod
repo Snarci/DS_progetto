@@ -15,9 +15,9 @@
  
  {l} L = ...;
  
- int c[F][L] = ...;
  
- range time = 0..15;
+ 
+ range time = 0..30;
  
  tuple t_struct{
    string f;
@@ -28,6 +28,8 @@
 {t_struct} t_list = ... ;
  
 int t[t_list] = ...;
+
+int c[F][L] = ...;
 tuple h{
   l f1;
   l f2;

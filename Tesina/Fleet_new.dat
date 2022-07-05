@@ -4,11 +4,11 @@
  * Creation Date: 4 lug 2022 at 15:23:41
  *********************************************/
 
-F = {"Alitalia","Volotea"};
+F = {"A319","A320","A321","E175","E190","B737"};
 
-S = [2,2];
+S = [2,2,2,2,2,2];
 
-C = {"Milano","Torino"};
+C = {"Milano","Torino","Cagliari","Venezia","Pisa","Roma","Napoli"};
 /*
 L = {
 <"Milano","Torino",4>,<"Milano","Torino",5>,<"Milano","Torino",6>,<"Milano","Torino",7>,
@@ -20,15 +20,12 @@ L = {
 <"Torino","Milano",7>,<"Torino","Milano",12>,<"Torino","Milano",13>
 } ;*/
 SheetConnection s("Flights.xlsx");
-L from SheetRead(s,"A2:C23");
+L from SheetRead(s,"A2:C101");
+t_list from SheetRead(s,"B107:D256");
+
 c = [[1],[2]];
 
-t_list = {
-<"Alitalia","Milano","Torino">,<"Volotea","Milano","Torino">,
-<"Alitalia","Torino","Milano">,<"Volotea","Torino","Milano">,			
-};
-
-t=[2,2,2,2];
+t from SheetRead(s,"E107:E256");
 //pair of flights
 H = {
 <<"Milano","Torino",5>,<"Torino","Milano",7>>,
