@@ -4,12 +4,22 @@
     	
     <configs>
         		
-        <config default="true" name="Tesina" category="opl">
+        <config default="false" name="Tesina" category="opl">
             			
             <ref name="Fleet_new.mod" type="model">
 			</ref>
             			
             <ref name="Fleet_new.dat" type="data">
+			</ref>
+            		
+        </config>
+        		
+        <config default="true" name="Benchmark" category="opl">
+            			
+            <ref name="Fleet_new_bench.mod" type="model">
+			</ref>
+            			
+            <ref name="Fleet_new_bench.dat" type="data">
 			</ref>
             		
         </config>

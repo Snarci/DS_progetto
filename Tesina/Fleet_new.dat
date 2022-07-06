@@ -6,7 +6,7 @@
 
 F = {"A319","A320","A321","E175","E190","B737"};
 
-S = [4,5,7,5,8,5];
+S = [6,6,6,6,6,6];
 
 C = {"Milano","Torino","Cagliari","Venezia","Pisa","Roma","Napoli"};
 /*

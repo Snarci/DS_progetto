@@ -1,0 +1,30 @@
+/*********************************************
+ * OPL 22.1.0.0 Data
+ * Author: lucaz
+ * Creation Date: 4 lug 2022 at 15:23:41
+ *********************************************/
+
+F = {"A319","A320","A321","E175","E190","B737"};
+
+S = [144,112,122,92,102,88];
+
+C = {"Milano","Torino","Cagliari","Venezia","Roma","Napoli","Pisa","Genova","Parigi","Londra","Lisbona","Oristano"};
+
+
+SheetConnection s("FlightsV2.xlsx");
+L from SheetRead(s,"K25:M2664");
+//L from SheetRead(s,"K25:M500");
+//L from SheetRead(s,"K25:M100");
+t_list from SheetRead(s,"T25:V816");
+
+c from SheetRead(s,"AF24:CXS29");
+//c from SheetRead(s,"AF24:SM29");
+//c from SheetRead(s,"AF24:DC29");
+
+
+t from SheetRead(s,"W25:W816");
+//pair of flights
+H = {
+<<"Milano","Torino",5>,<"Torino","Milano",7>>,
+<<"Torino","Milano",5>,<"Milano","Torino",7>>,
+};
