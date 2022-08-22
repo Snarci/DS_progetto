@@ -43,6 +43,8 @@ dvar int+ y[F][C][time];
 //quanti arrivano in c in tempo t
 dvar int+ z[F][C][time];
 
+
+
 minimize		
 	sum (f in F)
 	  sum(k in L)
@@ -98,6 +100,11 @@ subject to{
 	);
 	/**/
   }
+  
+ execute PARAMS {
+  cplex.tilim = 25200;
+  cplex.LPMethod  = 2; 
+}  
 //sono le x formattate bene e capibili  
 int xf[L][F];  
   execute DISPLAY

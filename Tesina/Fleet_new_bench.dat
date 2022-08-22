@@ -6,18 +6,26 @@
 
 F = {"A319","A320","A321","E175","E190","B737"};
 
-S = [144,112,122,92,102,88];
+//S = [124,82,102,72,72,68];
+S = [150,150,150,150,150,150];
+
 
 C = {"Milano","Torino","Cagliari","Venezia","Roma","Napoli","Pisa","Genova","Parigi","Londra","Lisbona","Oristano"};
 
 
 SheetConnection s("FlightsV2.xlsx");
 L from SheetRead(s,"K25:M2664");
+//1500
+//L from SheetRead(s,"K25:M1524");
 //L from SheetRead(s,"K25:M500");
 //L from SheetRead(s,"K25:M100");
 t_list from SheetRead(s,"T25:V816");
 
+
+
 c from SheetRead(s,"AF24:CXS29");
+//1500
+//c from SheetRead(s,"AF24:BFW29");
 //c from SheetRead(s,"AF24:SM29");
 //c from SheetRead(s,"AF24:DC29");
 
